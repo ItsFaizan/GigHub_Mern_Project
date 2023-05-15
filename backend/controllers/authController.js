@@ -8,7 +8,7 @@ export const register = async (req, res, next) => {
     const newUser = new User({
         ...req.body,
         password: hash,
-      });
+      });  
 
     await newUser.save();
     res.status(201).send("User has been created.");
@@ -22,7 +22,7 @@ export const login = async (req, res, next) => {
 
     if (!user) return next(createError(404, "User not found!"));
 
-    const isCorrect = bcrypt.compareSync(req.body.password, user.password);
+     const isCorrect = bcrypt.compareSync(req.body.password, user.password);
     if (!isCorrect)
       return next(createError(400, "Wrong password or username!"));
 

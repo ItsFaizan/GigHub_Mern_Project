@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose'; 
 import dotenv from 'dotenv';
 import userRoute from './routes/userRoute.js';
-//import reviewRoute from './routes/reviewRoute.js';
+import reviewRoute from './routes/reviewRoute.js';
 import authRoute from './routes/authRoute.js';
 import cookieParser from 'cookie-parser';
 
@@ -24,7 +24,7 @@ const connect = async () => {
 app.use(express.json());
 app.use(cookieParser());
 app.use("/backend/users", userRoute);
-//app.use("/backend/user_reviews", reviewRoute); 
+app.use("/backend/user_reviews", reviewRoute); 
 app.use("/backend/user_auth", authRoute);
 
 
