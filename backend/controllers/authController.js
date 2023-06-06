@@ -17,14 +17,27 @@ export const register = async (req, res, next) => {
   }
 };
 export const login = async (req, res, next) => {
+
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const { username, password: reqPassword } = req.body;
 
-    if (!user) return next(createError(404, "User not found!"));
+    if (!username || !reqPassword) {
+      res.status(400).json({ error: "Empty fields detected!" });
+      return; 
+    }
 
-     const isCorrect = bcrypt.compareSync(req.body.password, user.password);
-    if (!isCorrect)
-      return next(createError(400, "Wrong password or username!"));
+    const user = await User.findOne({ username: username });
+
+    if (!user) {
+      res.status(403).json({ error: "Invalid Credentials" });
+      return; 
+    }
+
+    const isCorrect = bcrypt.compareSync(reqPassword, user.password);
+    if (!isCorrect) {
+      res.status(400).json({ error: "username or password wrong" });
+      return; 
+    }
 
     const token = jwt.sign(
       {
@@ -35,14 +48,14 @@ export const login = async (req, res, next) => {
 
     const { password, ...info } = user._doc;
     res
-      .cookie("accessToken", token, {
-        httpOnly: true,
-      })
+      .cookie("accessToken", token)
+      
       .status(200)
       .send(info);
   } catch (err) {
     next(err);
   }
+ 
 };
 
 export const logout = async (req, res) => {

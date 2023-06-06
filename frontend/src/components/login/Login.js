@@ -1,10 +1,51 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
-import { useLocation } from 'react-router-dom';
 import avatar from '../../assets/profile.png';
 import styles from '../../styles/Login.module.css';
+import {toast} from 'react-toastify';
+import { useCookies } from 'react-cookie';
 
 function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [cookie] = useCookies(['accessToken']);
+  const navigate = useNavigate();
+
+  const accessToken = cookie.accessToken;
+
+console.log(accessToken);
+
+  const handleSubmit = async (e) => {
+    console.log("hi");
+    e.preventDefault();
+   try{
+        const res = await fetch("http://localhost:5000/backend/user_auth/user_login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+              
+            },
+            body: JSON.stringify({ username, password })
+          });
+
+      const data = await res.json();
+      console.log("hi");
+      if (data.error) {
+        toast.error(data.error);
+      }
+      else
+      {
+       
+        toast.success("Login Successful!");
+        navigate('/profile');
+      }
+
+    } catch (err) {
+
+        toast.error("Invalid Credentials");
+
+    }
+  };
 
 
   return (
@@ -19,15 +60,15 @@ function Login() {
          
         </div>
 
-        <form className='py-1' >
+        <form className='py-1' onSubmit={handleSubmit}>
             <div className='profile flex justify-center py-4'>
                 <img src={avatar} className={styles.profile_img} alt="avatar" />
             </div>
 
             <div className="textbox flex flex-col items-center gap-6">
-                <input className={styles.textbox} type="text" placeholder='Username' />
-                <input className={styles.textbox} type="text" placeholder='Password' />
-                <button className={styles.btn} type='submit'> <Link to="/home">Login</Link></button>
+                <input className={styles.textbox} type="text" placeholder='Username' onChange={(e) => setUsername(e.target.value)} />
+                <input className={styles.textbox} type="text" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+                <button className={styles.btn} type='submit'> Login</button>
             </div>
 
             <div className="text-center py-4">

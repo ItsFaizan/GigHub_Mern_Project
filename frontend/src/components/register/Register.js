@@ -44,8 +44,6 @@ function App() {
                   </MDBRow>
 
                   <MDBInput wrapperClass='mb-4' label='Birthday' size='lg' id='form3' type='text'/>
-
-
                   <MDBInput wrapperClass='mb-4' label='Pincode' size='lg' id='form4' type='text'/>
                   <MDBInput wrapperClass='mb-4' label='Course' size='lg' id='form5' type='text'/>
                   <MDBInput wrapperClass='mb-4' label='Email ID' size='lg' id='form6' type='text'/>
