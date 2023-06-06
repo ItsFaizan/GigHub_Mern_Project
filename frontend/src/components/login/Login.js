@@ -16,7 +16,6 @@ function Login() {
 console.log(accessToken);
 
   const handleSubmit = async (e) => {
-    console.log("hi");
     e.preventDefault();
    try{
         const res = await fetch("http://localhost:5000/backend/user_auth/user_login", {
@@ -29,7 +28,6 @@ console.log(accessToken);
           });
 
       const data = await res.json();
-      console.log("hi");
       if (data.error) {
         toast.error(data.error);
       }

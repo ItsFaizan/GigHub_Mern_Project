@@ -1,6 +1,6 @@
 import Review from "../models/reviewModel.js";
 
-export const reviews = async (req, res) => {
+export const reviews = async (req, res,next) => {
     try {
         const review = await Review.create({
             gigId: req.body.gigId,
@@ -45,4 +45,10 @@ export const deletereview = async (req, res) => {
        await Review.findByIdAndDelete(req.params.id);
        res.status(200).send("Review deleted.");
   
+  };
+
+             
+export const getreview = async (req, res) => {
+    const user = await Review.findById(req.params.id);
+    res.json({user});
   };
