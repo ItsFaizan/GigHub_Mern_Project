@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 import avatar from '../../assets/profile.png';
 import styles from '../../styles/Login.module.css';
 
-
 function Login() {
+
 
   return (
 <div className="container mx-auto" style={{background: '#dcdce6', backgroundImage: `url(${require('../../assets/Background.png')})`}}>
-
     <div className='flex justify-center items-center h-screen'>
       <div className={styles.glass}>
 
@@ -27,7 +27,7 @@ function Login() {
             <div className="textbox flex flex-col items-center gap-6">
                 <input className={styles.textbox} type="text" placeholder='Username' />
                 <input className={styles.textbox} type="text" placeholder='Password' />
-                <button className={styles.btn} type='submit'>Login</button>
+                <button className={styles.btn} type='submit'> <Link to="/home">Login</Link></button>
             </div>
 
             <div className="text-center py-4">

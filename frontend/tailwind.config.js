@@ -6,6 +6,10 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins:[
+    require('postcss-nesting'),
+    require('postcss-nested'),
+    require('tailwindcss'),
+  ],
 }
 
